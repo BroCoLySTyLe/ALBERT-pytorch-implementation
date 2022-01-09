@@ -15,7 +15,8 @@ class MultiHeadAttention(nn.Module):
         self.output_linear = torch.nn.Linear(model_hidden, model_hidden)
         self.dropout = torch.nn.Dropout(dropout)
 
-    def forward(self, query: torch.Tensor, key: torch.Tensor, value: torch.Tensor, mask : Optional[torch.ByteTensor]) -> torch.Tensor:
+    def forward(self, query: torch.Tensor, key: torch.Tensor, value: torch.Tensor,
+                mask: Optional[torch.ByteTensor]) -> torch.Tensor:
 
         assert query.shape == key.shape == value.shape , "Query, Key, Value Shape Error"
         
@@ -29,11 +30,13 @@ class MultiHeadAttention(nn.Module):
         attn_score = torch.matmul(query, key.permute(0,1,3,2))
         
         if mask is not None:
-            assert mask.shape == torch.Size([batch_size, seq_len]) , "Attention mask Shape Error"
+            assert mask.shape == torch.Size([batch_size, seq_len]), "Attention mask Shape Error"
             mask_tensor = mask.unsqueeze(1).repeat(1, mask.shape[1], 1).unsqueeze(1)
             mask_tensor = mask_tensor.type(torch.float)
-            mask_tensor = torch.where(mask_tensor==0, torch.tensor(-1e+10, dtype=torch.float).to(mask_tensor.device), mask_tensor)
-            mask_tensor = torch.where(mask_tensor==1, torch.tensor(0, dtype=torch.float).to(mask_tensor.device), mask_tensor)
+            mask_tensor = torch.where(mask_tensor == 0, torch.tensor(-1e+10, dtype=torch.float).to(mask_tensor.device),
+                                      mask_tensor)
+            mask_tensor = torch.where(mask_tensor == 1, torch.tensor(0, dtype=torch.float).to(mask_tensor.device),
+                                      mask_tensor)
             attn_score += mask_tensor
         
         attn_ratio = torch.nn.functional.softmax(attn_score, dim=-1)

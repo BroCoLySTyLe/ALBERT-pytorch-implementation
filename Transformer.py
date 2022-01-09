@@ -6,7 +6,7 @@ from MultiHeadAttention import MultiHeadAttention
 class Transformer(nn.Module):
     def __init__(self, model_hidden : int , feed_forward_hidden : int , num_head : int , dropout : int = 0.1):
         super().__init__()
-        
+
         self.multihead_attention = MultiHeadAttention(model_hidden=model_hidden, num_head=num_head, dropout=dropout)
         self.dropout = nn.Dropout(dropout)
         self.position_wise_ff_in = nn.Linear(model_hidden, feed_forward_hidden)
