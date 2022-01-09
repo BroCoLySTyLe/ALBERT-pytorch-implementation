@@ -1,5 +1,7 @@
 import torch
 import torch.nn as nn
+from typing import Optional
+
 from MultiHeadAttention import MultiHeadAttention
 class Transformer(nn.Module):
     def __init__(self, model_hidden : int , feed_forward_hidden : int , num_head : int , dropout : int = 0.1):
@@ -12,7 +14,7 @@ class Transformer(nn.Module):
         self.gelu = nn.GELU()
         self.layer_norm = nn.LayerNorm(model_hidden)      
   
-    def forward(self, input_tensor : torch.Tensor, mask) -> torch.Tensor:
+    def forward(self, input_tensor : torch.Tensor, mask : Optional[torch.ByteTensor]) -> torch.Tensor:
         
         attn_out = self.multihead_attention(input_tensor, input_tensor, input_tensor, mask=mask)
         in_sub_layer = input_tensor + self.dropout(attn_out)

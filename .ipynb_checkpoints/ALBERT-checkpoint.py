@@ -1,8 +1,8 @@
 import torch
 import torch.nn as nn
-
 from Transformer import Transformer
 from Embeddings import ALBERTTokenEmbedding
+from typing import Optional
 
 class ALBERT(nn.Module):
     def __init__(self, vocab_size: int, layer_iter: int = 12, num_group: int = 1, token_embedding_size: int = 128,
@@ -21,10 +21,10 @@ class ALBERT(nn.Module):
         self.transformer_layer_group = nn.ModuleList(
             [Transformer(model_hidden, model_hidden * 4, num_head, dropout) for _ in range(num_group)])
 
-    def forward(self, input_ids : torch.IntTensor, segment_ids: torch.IntTensor, mask) -> torch.Tensor:
+    def forward(self, input_ids : torch.IntTensor, segment_ids: Optional[torch.IntTensor] = None, mask: Optional[torch.ByteTensor] = None) -> torch.Tensor:
 
-        assert input_ids.shape == segment_ids.shape, "input_ids and segment_ids shape Missmatching"
-        
+        if segment_ids is not None:
+            assert input_ids.shape == segment_ids.shape, "input_ids and segment_ids shape Missmatching"
         token_embedding = self.ALBERTTokenEmbedding(input_ids, segment_ids)
         input_hidden = self.token_to_hidden_projection_layer(token_embedding)
 

@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import math
+from typing import Optional
 
 class ALBERTTokenEmbedding(nn.Module):
     def __init__(self, vocab_size: int, token_embedding_size: int = 128, dropout = 0.1):
@@ -11,10 +12,11 @@ class ALBERTTokenEmbedding(nn.Module):
         self.position = PositionalEmbedding(token_embedding_size = token_embedding_size)
         self.token_embedding_size = token_embedding_size
 
-    def forward(self, input_idx: torch.Tensor, segment_idx: torch.Tensor) -> torch.Tensor:
-
-        return self.token(input_idx) + self.position(input_idx) + self.segment(segment_idx)  
-
+    def forward(self, input_ids: torch.IntTensor, segment_ids: Optional[torch.IntTensor]) -> torch.Tensor:
+        if segment_ids is not None:
+            return self.token(input_ids) + self.position(input_ids) + self.segment(segment_ids) 
+        else:
+            return self.token(input_ids) + self.position(input_ids)
 
 class TokenEmbedding(nn.Embedding):
     def __init__(self, vocab_size: int, token_embedding_size: int = 128):
