@@ -16,7 +16,7 @@ class MultiHeadAttention(nn.Module):
         self.dropout = torch.nn.Dropout(dropout)
 
     def forward(self, query: torch.Tensor, key: torch.Tensor, value: torch.Tensor,
-                mask: Optional[torch.ByteTensor]) -> torch.Tensor:
+                mask: Optional[torch.BoolTensor] = None) -> torch.Tensor:
 
         assert query.shape == key.shape == value.shape , "Query, Key, Value Shape Error"
         

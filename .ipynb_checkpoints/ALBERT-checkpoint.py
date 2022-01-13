@@ -26,7 +26,10 @@ class ALBERT(nn.Module):
 
         if segment_ids is not None:
             assert input_ids.shape == segment_ids.shape, "input_ids and segment_ids shape Missmatching"
-        token_embedding = self.ALBERTTokenEmbedding(input_ids, segment_ids)
+            token_embedding = self.ALBERTTokenEmbedding(input_ids, segment_ids)
+        else:
+        token_embedding = self.ALBERTTokenEmbedding(input_ids)
+
         input_hidden = self.token_to_hidden_projection_layer(token_embedding)
 
         for i in range(self.layer_iter):

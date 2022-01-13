@@ -12,7 +12,7 @@ class ALBERTTokenEmbedding(nn.Module):
         self.position = PositionalEmbedding(token_embedding_size = token_embedding_size)
         self.token_embedding_size = token_embedding_size
 
-    def forward(self, input_ids: torch.IntTensor, segment_ids: Optional[torch.IntTensor]) -> torch.Tensor:
+    def forward(self, input_ids: torch.IntTensor, segment_ids: Optional[torch.IntTensor] = None) -> torch.Tensor:
         if segment_ids is not None:
             return self.token(input_ids) + self.position(input_ids) + self.segment(segment_ids) 
         else:
