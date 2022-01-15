@@ -28,13 +28,12 @@ class ALBERT(nn.Module):
             assert input_ids.shape == segment_ids.shape, "input_ids and segment_ids shape Missmatching"
             token_embedding = self.ALBERTTokenEmbedding(input_ids, segment_ids)
         else:
-        token_embedding = self.ALBERTTokenEmbedding(input_ids)
-
+            token_embedding = self.ALBERTTokenEmbedding(input_ids)
         input_hidden = self.token_to_hidden_projection_layer(token_embedding)
-
         for i in range(self.layer_iter):
-            # If you want to iterate staked layers, Assign group_index = i % self.num_group
+            # If you want to iterate staked layers, Use group_index = i % self.num_group
             group_index = (i * self.num_group) // self.layer_iter
+            #group_index = i % self.num_group
             if i == 0:
                 x = self.transformer_layer_group[group_index](input_hidden,mask)
             else:

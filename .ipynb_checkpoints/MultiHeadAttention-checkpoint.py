@@ -12,7 +12,6 @@ class MultiHeadAttention(nn.Module):
         self.query_linear = torch.nn.Linear(model_hidden, model_hidden)
         self.key_linear = torch.nn.Linear(model_hidden, model_hidden)
         self.value_linear = torch.nn.Linear(model_hidden, model_hidden)
-        self.output_linear = torch.nn.Linear(model_hidden, model_hidden)
         self.dropout = torch.nn.Dropout(dropout)
 
     def forward(self, query: torch.Tensor, key: torch.Tensor, value: torch.Tensor,

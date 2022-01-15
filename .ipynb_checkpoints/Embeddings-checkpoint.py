@@ -28,7 +28,7 @@ class SegmentEmbedding(nn.Embedding):
         super().__init__(3, token_embedding_size, padding_idx = 0)
 
 
-## PositionalEmbedding은 pytorch PositinalEncoding에서 참고하여 작성
+## PositionalEmbedding from pytorch PositinalEncoding
 class PositionalEmbedding(nn.Module):
 
     def __init__(self, token_embedding_size: int = 128, dropout: float = 0.1, max_len: int = 512):

@@ -1,45 +1,19 @@
 # ALBERT-pytorch-implementation
 
-## developing...
- * 모델의 개념이해를 돕기 위한 구현물로 현재 변수명을 상세히 적었고 변수를 Configuration화 하지 않고 중복하여 적어 구현하였습니다.
 
 
-### 2022-01-05
- * `MultiHeadAttention.py` 구현 완료
+### This is a ALBERT Model written using torch only without huggingface transformer library.
+ * As it is a code that implements only the model structure, the training code is not provided. Therefore, in order for you to actually train the model, you have to train the model by writing the train code yourself.
+ * I wrote the variable names in detail to help you study.
+ * If you want to set the same as the library environment in which I developed this code, you can use `pip3 install -r requirements.txt`
+ * You can do a simple test by running the `ALBERT-testing.ipynb` or `ALBERT-testing.py` code. 
 
 
-### 2022-01-06
- * `Transformer.py` 구현 완료
-   * Position-wise FeedForward Network 구현 
-   * Sublayer Connection 구현
-   * GELU이용
- * `ALBERT.py` 구현 중 ... (Embedding 미구현)
- 
-### 2022-01-07
- * `Embeddings.py` 구현 완료
-   * Position Embedding 구현
-   * Token Embedding 구현
-   * Segment Embedding 구현 (SOP 적용할 시 필요하여 일단 구현)
- * `ALBERT.py` 구현 완료
-   * Hidden Projection 구현
-   * Staked Layer iteration 가능
- 
-
-
-------------------------------------------------
-
-
-
-
-
-### TODO Lists.
-* ~~Embedding 구현~~
-* Masked Language Model + SOP 구현
-* 변수 Configuration 화
-* 코드 정리 및 Package 화
-
-### IDEA (Further Implementations)
-* Compression
-  * Pruning
-  * Quantization (clustering method)
-  * Distillation
+### files
+ * `ALBERT.py` 
+ * `Transformer.py`
+ * `MultiHeadAttention.py`
+ * `Embeddings.py`
+ * `ALBERT-testing.ipynb`
+ * `ALBERT-testing.py`
+ * `requirements.txt`
